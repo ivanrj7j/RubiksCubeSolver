@@ -1,11 +1,12 @@
 public class Main {
     public static void main(String[] args) {
-        CubeMover mover = new CubeMover();
 
         Cubie a = new Cubie();
-        MoveGenerator generator = new MoveGenerator(a);
-        for(Cubie state : generator.getMoves()){
-            System.out.println(state);
-        }
+        CubeMover mover = new CubeMover();
+        Cubie b = mover.applyMoves(a, 1, 0, 2, 5);
+        DFSSolver solver = new DFSSolver();
+        Solution solution = solver.solve(b);
+
+        System.out.printf("Total visited: %d Total searched: %d\n", solution.visitedMoves, solution.searchedMoves);
     }
 }
