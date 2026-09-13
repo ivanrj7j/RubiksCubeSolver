@@ -34,7 +34,7 @@ public class BFSSolver implements CubeSolver {
             MoveGenerator generator = new MoveGenerator(current.move.state);
             for(Move move : generator.getMoves()){
                 CubeKey key = move.state.getKey();
-                Node inspected = new Node(move, current);
+                Node inspected = new Node(move, current, current.depth+1);
 
                 if(!visited.contains(key)){
                     visitedMoves++;
