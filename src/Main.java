@@ -11,13 +11,7 @@ public class Main {
         Facelet first = new Facelet(a);
         Facelet last = new Facelet(e);
 
-        for(int i = 0; i < 9*6; i++){
-            System.out.printf("(%d, %d)\n", first.facelets[i], last.facelets[i]);
-            if(first.facelets[i] != last.facelets[i]){
-                System.out.println("Not equal");
-                return;
-            }
-        }
-        System.out.println("Equal");
+        System.out.println(a.getHash() == e.getHash());
+        System.out.println(b.getHash());
     }
 }

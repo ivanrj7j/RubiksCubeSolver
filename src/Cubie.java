@@ -161,4 +161,20 @@ public class Cubie {
 
         return inversions % 2;
     }
+
+    public long getHash() {
+        long hash = 0x9E3779B97F4A7C15L;
+
+        for (int i = 0; i < 8; i++) {
+            hash ^= cornerPermutation[i] + 0x9E3779B9L + (hash << 6) + (hash >> 2);
+            hash ^= cornerOrientation[i] + 0x9E3779B9L + (hash << 6) + (hash >> 2);
+        }
+
+        for (int i = 0; i < 12; i++) {
+            hash ^= edgePermutation[i] + 0x9E3779B9L + (hash << 6) + (hash >> 2);
+            hash ^= edgeOrientation[i] + 0x9E3779B9L + (hash << 6) + (hash >> 2);
+        }
+
+        return hash;
+    }
 }
