@@ -242,4 +242,10 @@ public class Cubie {
 
         return new CubeKey(high, low);
     }
+
+    @Override
+    public String toString() {
+        CubeKey key = getKey();
+        return String.format("%016x", key.high()) + String.format("%016x", key.low());
+    }
 }
