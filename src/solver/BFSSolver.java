@@ -1,3 +1,5 @@
+package solver;
+
 import move.Move;
 import move.MoveGenerator;
 import move.Node;
@@ -6,7 +8,7 @@ import state.Cubie;
 
 import java.util.*;
 
-public class BFSSolver implements CubeSolver{
+public class BFSSolver implements CubeSolver {
     @Override
     public Solution solve(Cubie state) {
         HashSet<CubeKey> visited = new HashSet<>();
