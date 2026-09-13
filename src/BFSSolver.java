@@ -1,41 +1,53 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Stack;
+import java.util.*;
 
-public class DFSSolver implements CubeSolver{
+public class BFSSolver implements CubeSolver{
     @Override
     public Solution solve(Cubie state) {
         HashSet<CubeKey> visited = new HashSet<>();
         ArrayList<Integer> moves = new ArrayList<>();
-        Stack<Cubie> stack = new Stack<>();
+        ArrayDeque<Node> queue = new ArrayDeque<>();
 
-        stack.push(state);
+        queue.offer(new Node(
+                new Move(state, -1),
+                null
+        ));
+
         visited.add(state.getKey());
 
-        int visitedMoves = 0;
         int searchedMoves = 0;
+        int visitedMoves = 0;
 
         boolean found = false;
-
-        while (!stack.isEmpty() && !found){
+        Node leaf = null;
+        while(!queue.isEmpty() && !found){
             searchedMoves++;
-            Cubie current = stack.pop();
-            MoveGenerator generator = new MoveGenerator(current);
+            Node current = queue.poll();
 
+            MoveGenerator generator = new MoveGenerator(current.move.state);
             for(Move move : generator.getMoves()){
                 CubeKey key = move.state.getKey();
+                Node inspected = new Node(move, current);
+
                 if(!visited.contains(key)){
                     visitedMoves++;
                     visited.add(key);
-                    stack.push(move.state);
+                    queue.offer(inspected);
                 }
+
                 if(move.state.isSolved()){
                     found = true;
+                    leaf = inspected;
                     break;
                 }
             }
-
         }
+
+        while (leaf != null){
+            moves.add(leaf.move.move);
+            leaf = leaf.parent;
+        }
+
+        Collections.reverse(moves);
 
         return new Solution(moves, searchedMoves, visitedMoves);
     }

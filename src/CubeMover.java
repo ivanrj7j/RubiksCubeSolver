@@ -135,4 +135,18 @@ public class CubeMover {
 
         return result;
     }
+
+    public static String stringifyMove(int move){
+        if(move < 0 || move > 17){
+            throw new RuntimeException("Move number should be in [0, 17]");
+        }
+        String[] prefixes = {"U", "R", "F", "D", "L", "B"};
+        int prefix = move % 6;
+        int postfix = move / 6;
+
+        if(postfix == 0) return prefixes[prefix];
+
+        String[] postfixes = {"2", "'"};
+        return  prefixes[prefix] + postfixes[postfix-1];
+    }
 }
