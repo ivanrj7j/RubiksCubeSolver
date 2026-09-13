@@ -1,9 +1,6 @@
 import heuristic.SimpleMisplaceHeuristic;
 import move.CubeMover;
-import solver.BFSSolver;
-import solver.BestFirstSearchSolver;
-import solver.CubeSolver;
-import solver.Solution;
+import solver.*;
 import state.Cubie;
 
 import java.util.Random;
@@ -15,18 +12,18 @@ public class Main {
         CubeMover mover = new CubeMover();
         Cubie b = a;
         Random r = new Random();
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 3; i++){
             int move = r.nextInt(6);
             System.out.println(move);
             b = mover.move(b, move);
         }
         CubeSolver solver1 = new BestFirstSearchSolver(new SimpleMisplaceHeuristic());
-        CubeSolver solver2 = new BFSSolver();
+        CubeSolver solver2 = new IterativeDeepeningBestFirst(new SimpleMisplaceHeuristic(), 15);
 
         Solution solution1 = solver1.solve(b);
         Solution solution2 = solver2.solve(b);
 
-        System.out.printf("Best First: Moves needed: %d Total visited: %d Total searched: %d\n", solution1.moves.size()-1, solution1.visitedMoves, solution1.searchedMoves);
+        System.out.printf("Greedy : Moves needed: %d Total visited: %d Total searched: %d\n", solution1.moves.size()-1, solution1.visitedMoves, solution1.searchedMoves);
 
         System.out.printf("BFS: Moves needed: %d Total visited: %d Total searched: %d\n", solution2.moves.size()-1, solution2.visitedMoves, solution2.searchedMoves);
 
