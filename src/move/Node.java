@@ -1,15 +1,15 @@
-import java.util.ArrayList;
+package move;
 
 public class Node {
-    Move move;
-    Node parent;
+    public Move move;
+    public Node parent;
 
-    Node(Move move){
+    public Node(Move move){
         this.move = move;
         this.parent = null;
     }
 
-    Node(Move move, Node parent){
+    public Node(Move move, Node parent){
         this.move = move;
         this.parent = parent;
     }

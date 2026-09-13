@@ -1,15 +1,19 @@
+package move;
+
+import state.Cubie;
+
 import java.util.ArrayList;
 
 public class MoveGenerator {
-    Cubie state;
-    CubeMover mover;
+    private final Cubie state;
+    private final CubeMover mover;
 
-    MoveGenerator(Cubie state){
+    public MoveGenerator(Cubie state){
         this.state = state;
         this.mover = new CubeMover();
     }
 
-    ArrayList<Move> getMoves(){
+    public ArrayList<Move> getMoves(){
         ArrayList<Move> nextStates = new ArrayList<>();
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 6; j++){

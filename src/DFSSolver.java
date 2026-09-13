@@ -1,3 +1,8 @@
+import move.Move;
+import move.MoveGenerator;
+import state.CubeKey;
+import state.Cubie;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;

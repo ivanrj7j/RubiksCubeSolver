@@ -1,3 +1,5 @@
+package state;
+
 public class Cubie {
     public int[] edgePermutation;
     public int[] edgeOrientation;

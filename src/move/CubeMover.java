@@ -1,3 +1,7 @@
+package move;
+
+import state.Cubie;
+
 public class CubeMover {
     public static final int U = 0;
     public static final int R = 1;
@@ -138,7 +142,7 @@ public class CubeMover {
 
     public static String stringifyMove(int move){
         if(move < 0 || move > 17){
-            throw new RuntimeException("Move number should be in [0, 17]");
+            throw new RuntimeException("move.Move number should be in [0, 17]");
         }
         String[] prefixes = {"U", "R", "F", "D", "L", "B"};
         int prefix = move % 6;

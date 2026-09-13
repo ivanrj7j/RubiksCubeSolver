@@ -1,3 +1,5 @@
+package state;
+
 public class Facelet {
 
     public int[] facelets;

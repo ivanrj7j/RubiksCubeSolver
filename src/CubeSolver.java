@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import state.Cubie;
 
 public interface CubeSolver {
     Solution solve(Cubie state);
