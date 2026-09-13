@@ -1,3 +1,4 @@
+import heuristic.ManhattenLikeHeuristic;
 import heuristic.SimpleMisplaceHeuristic;
 import move.CubeMover;
 import solver.*;
@@ -12,13 +13,13 @@ public class Main {
         CubeMover mover = new CubeMover();
         Cubie b = a;
         Random r = new Random();
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 4; i++){
             int move = r.nextInt(6);
             System.out.println(move);
             b = mover.move(b, move);
         }
         CubeSolver solver1 = new BestFirstSearchSolver(new SimpleMisplaceHeuristic());
-        CubeSolver solver2 = new IterativeDeepeningBestFirst(new SimpleMisplaceHeuristic(), 15);
+        CubeSolver solver2 = new IterativeDeepeningBestFirst(new ManhattenLikeHeuristic(), 15);
 
         Solution solution1 = solver1.solve(b);
         Solution solution2 = solver2.solve(b);
