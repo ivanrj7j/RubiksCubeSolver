@@ -80,6 +80,45 @@ public class Cubie {
         this.cornerOrientation = cornerOrientation.clone();
     }
 
+    public Cubie(CubeKey key) {
+        edgePermutation = new int[12];
+        edgeOrientation = new int[12];
+        cornerPermutation = new int[8];
+        cornerOrientation = new int[8];
+
+        long low = key.low();
+        long high = key.high();
+        int shift = 0;
+
+        for (int i = 0; i < 8; i++) {
+            cornerPermutation[i] = (int) ((low >>> shift) & 0xF);
+            shift += 4;
+        }
+
+        for (int i = 0; i < 8; i++) {
+            cornerOrientation[i] = (int) ((low >>> shift) & 0x3);
+            shift += 2;
+        }
+
+        for (int i = 0; i < 12; i++) {
+            if (shift < 64) {
+                edgePermutation[i] = (int) ((low >>> shift) & 0xF);
+            } else {
+                edgePermutation[i] = (int) ((high >>> (shift - 64)) & 0xF);
+            }
+            shift += 4;
+        }
+
+        for (int i = 0; i < 12; i++) {
+            if (shift < 64) {
+                edgeOrientation[i] = (int) ((low >>> shift) & 0x1);
+            } else {
+                edgeOrientation[i] = (int) ((high >>> (shift - 64)) & 0x1);
+            }
+            shift++;
+        }
+    }
+
     public Cubie copy() {
         return new Cubie(
                 edgePermutation,
@@ -162,19 +201,45 @@ public class Cubie {
         return inversions % 2;
     }
 
-    public long getHash() {
-        long hash = 0x9E3779B97F4A7C15L;
+    public CubeKey getKey() {
+        long low = 0;
+        long high = 0;
+        int shift = 0;
 
         for (int i = 0; i < 8; i++) {
-            hash ^= cornerPermutation[i] + 0x9E3779B9L + (hash << 6) + (hash >> 2);
-            hash ^= cornerOrientation[i] + 0x9E3779B9L + (hash << 6) + (hash >> 2);
+            low |= ((long) cornerPermutation[i]) << shift;
+            shift += 4;
+        }
+
+        for (int i = 0; i < 8; i++) {
+            low |= ((long) cornerOrientation[i]) << shift;
+            shift += 2;
         }
 
         for (int i = 0; i < 12; i++) {
-            hash ^= edgePermutation[i] + 0x9E3779B9L + (hash << 6) + (hash >> 2);
-            hash ^= edgeOrientation[i] + 0x9E3779B9L + (hash << 6) + (hash >> 2);
+            int value = edgePermutation[i];
+
+            if (shift < 64) {
+                low |= (long) value << shift;
+            } else {
+                high |= (long) value << (shift - 64);
+            }
+
+            shift += 4;
         }
 
-        return hash;
+        for (int i = 0; i < 12; i++) {
+            int value = edgeOrientation[i];
+
+            if (shift < 64) {
+                low |= (long) value << shift;
+            } else {
+                high |= (long) value << (shift - 64);
+            }
+
+            shift++;
+        }
+
+        return new CubeKey(high, low);
     }
 }

@@ -8,10 +8,7 @@ public class Main {
         Cubie d = mover.move(c, CubeMover.B);
         Cubie e = mover.move(d, CubeMover.B);
 
-        Facelet first = new Facelet(a);
-        Facelet last = new Facelet(e);
-
-        System.out.println(a.getHash() == e.getHash());
-        System.out.println(b.getHash());
+        System.out.println(Long.toHexString(a.getKey().high())+Long.toHexString(a.getKey().low()));
+        System.out.println(Long.toHexString(e.getKey().high())+Long.toHexString(e.getKey().low()));
     }
 }
