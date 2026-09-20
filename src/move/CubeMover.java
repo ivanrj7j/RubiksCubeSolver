@@ -153,4 +153,34 @@ public class CubeMover {
         String[] postfixes = {"2", "'"};
         return  prefixes[prefix] + postfixes[postfix-1];
     }
+
+    public static boolean shouldPrune(int previousMove, int nextMove) {
+        if(previousMove == -1){
+            return false;
+        }
+
+        int previousFace = previousMove % 6;
+        int nextFace = nextMove % 6;
+
+        // Same face
+        if(previousFace == nextFace){
+            return true;
+        }
+
+        // Opposite faces: enforce canonical ordering
+        if(isOppositeFace(previousFace, nextFace)){
+            return previousFace > nextFace;
+        }
+
+        return false;
+    }
+
+    public static boolean isOppositeFace(int face1, int face2) {
+        return (face1 == U && face2 == D) ||
+                (face1 == D && face2 == U) ||
+                (face1 == R && face2 == L) ||
+                (face1 == L && face2 == R) ||
+                (face1 == F && face2 == B) ||
+                (face1 == B && face2 == F);
+    }
 }

@@ -1,5 +1,6 @@
 package solver;
 
+import move.CubeMover;
 import move.Move;
 import move.MoveGenerator;
 import move.Node;
@@ -33,6 +34,8 @@ public class BFSSolver implements CubeSolver {
 
             MoveGenerator generator = new MoveGenerator(current.move.state);
             for(Move move : generator.getMoves()){
+                if(CubeMover.shouldPrune(current.move.move, move.move)) continue;
+
                 CubeKey key = move.state.getKey();
                 Node inspected = new Node(move, current, current.depth+1);
 
