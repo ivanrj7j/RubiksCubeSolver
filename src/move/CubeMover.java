@@ -94,21 +94,21 @@ public class CubeMover {
             throw new IllegalArgumentException("Invalid move: " + move);
         }
 
-        int[] edgePermutation = new int[12];
-        int[] edgeOrientation = new int[12];
-        int[] cornerPermutation = new int[8];
-        int[] cornerOrientation = new int[8];
+        byte[] edgePermutation = new byte[12];
+        byte[] edgeOrientation = new byte[12];
+        byte[] cornerPermutation = new byte[8];
+        byte[] cornerOrientation = new byte[8];
 
         for (int position = 0; position < 8; position++) {
             int oldPosition = cornerPermutationMove[move][position];
             cornerPermutation[position] = state.cornerPermutation[oldPosition];
-            cornerOrientation[position] = (state.cornerOrientation[oldPosition] + cornerOrientationMove[move][position]) % 3;
+            cornerOrientation[position] = (byte) ((state.cornerOrientation[oldPosition] + cornerOrientationMove[move][position]) % 3);
         }
 
         for (int position = 0; position < 12; position++) {
             int oldPosition = edgePermutationMove[move][position];
             edgePermutation[position] = state.edgePermutation[oldPosition];
-            edgeOrientation[position] = (state.edgeOrientation[oldPosition] + edgeOrientationMove[move][position]) % 2;
+            edgeOrientation[position] = (byte) ((state.edgeOrientation[oldPosition] + edgeOrientationMove[move][position]) % 2);
         }
 
         return new Cubie(edgePermutation, edgeOrientation, cornerPermutation, cornerOrientation);

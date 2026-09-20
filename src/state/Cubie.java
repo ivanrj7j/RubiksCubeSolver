@@ -1,10 +1,10 @@
 package state;
 
 public class Cubie {
-    public int[] edgePermutation;
-    public int[] edgeOrientation;
-    public int[] cornerPermutation;
-    public int[] cornerOrientation;
+    public byte[] edgePermutation;
+    public byte[] edgeOrientation;
+    public byte[] cornerPermutation;
+    public byte[] cornerOrientation;
 
     /*
         Corner positions / pieces:
@@ -46,28 +46,28 @@ public class Cubie {
     */
 
     public Cubie() {
-        edgePermutation = new int[12];
-        edgeOrientation = new int[12];
+        edgePermutation = new byte[12];
+        edgeOrientation = new byte[12];
 
-        cornerPermutation = new int[8];
-        cornerOrientation = new int[8];
+        cornerPermutation = new byte[8];
+        cornerOrientation = new byte[8];
 
-        for (int i = 0; i < 8; i++) {
+        for (byte i = 0; i < 8; i++) {
             cornerPermutation[i] = i;
             cornerOrientation[i] = 0;
         }
 
-        for (int i = 0; i < 12; i++) {
+        for (byte i = 0; i < 12; i++) {
             edgePermutation[i] = i;
             edgeOrientation[i] = 0;
         }
     }
 
     public Cubie(
-            int[] edgePermutation,
-            int[] edgeOrientation,
-            int[] cornerPermutation,
-            int[] cornerOrientation
+            byte[] edgePermutation,
+            byte[] edgeOrientation,
+            byte[] cornerPermutation,
+            byte[] cornerOrientation
     ) {
         if (edgePermutation.length != 12 ||
                 edgeOrientation.length != 12 ||
@@ -83,39 +83,39 @@ public class Cubie {
     }
 
     public Cubie(CubeKey key) {
-        edgePermutation = new int[12];
-        edgeOrientation = new int[12];
-        cornerPermutation = new int[8];
-        cornerOrientation = new int[8];
+        edgePermutation = new byte[12];
+        edgeOrientation = new byte[12];
+        cornerPermutation = new byte[8];
+        cornerOrientation = new byte[8];
 
         long low = key.low();
         long high = key.high();
         int shift = 0;
 
         for (int i = 0; i < 8; i++) {
-            cornerPermutation[i] = (int) ((low >>> shift) & 0xF);
+            cornerPermutation[i] = (byte) ((low >>> shift) & 0xF);
             shift += 4;
         }
 
         for (int i = 0; i < 8; i++) {
-            cornerOrientation[i] = (int) ((low >>> shift) & 0x3);
+            cornerOrientation[i] = (byte) ((low >>> shift) & 0x3);
             shift += 2;
         }
 
         for (int i = 0; i < 12; i++) {
             if (shift < 64) {
-                edgePermutation[i] = (int) ((low >>> shift) & 0xF);
+                edgePermutation[i] = (byte) ((low >>> shift) & 0xF);
             } else {
-                edgePermutation[i] = (int) ((high >>> (shift - 64)) & 0xF);
+                edgePermutation[i] = (byte) ((high >>> (shift - 64)) & 0xF);
             }
             shift += 4;
         }
 
         for (int i = 0; i < 12; i++) {
             if (shift < 64) {
-                edgeOrientation[i] = (int) ((low >>> shift) & 0x1);
+                edgeOrientation[i] = (byte) ((low >>> shift) & 0x1);
             } else {
-                edgeOrientation[i] = (int) ((high >>> (shift - 64)) & 0x1);
+                edgeOrientation[i] = (byte) ((high >>> (shift - 64)) & 0x1);
             }
             shift++;
         }
@@ -175,7 +175,7 @@ public class Cubie {
                 && isValidPermutation(cornerPermutation);
     }
 
-    private static boolean isValidPermutation(int[] permutation) {
+    private static boolean isValidPermutation(byte[] permutation) {
         boolean[] seen = new boolean[permutation.length];
 
         for (int value : permutation) {
@@ -189,7 +189,7 @@ public class Cubie {
         return true;
     }
 
-    private static int permutationParity(int[] permutation) {
+    private static int permutationParity(byte[] permutation) {
         int inversions = 0;
 
         for (int i = 0; i < permutation.length; i++) {

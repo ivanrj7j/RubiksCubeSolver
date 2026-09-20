@@ -137,7 +137,7 @@ public class Facelet {
 
         for (int position = 0; position < 8; position++) {
 
-            int orientation;
+            byte orientation;
 
             for (orientation = 0; orientation < 3; orientation++) {
                 int color = facelets[
@@ -165,7 +165,7 @@ public class Facelet {
 
             boolean found = false;
 
-            for (int piece = 0; piece < 8; piece++) {
+            for (byte piece = 0; piece < 8; piece++) {
                 if (color1 == cornerColors[piece][1]
                         && color2 == cornerColors[piece][2]) {
 
@@ -188,7 +188,7 @@ public class Facelet {
 
             boolean found = false;
 
-            for (int piece = 0; piece < 12; piece++) {
+            for (byte piece = 0; piece < 12; piece++) {
 
                 if (facelets[edgeFacelets[position][0]]
                         == edgeColors[piece][0]
